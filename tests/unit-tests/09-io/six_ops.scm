@@ -1,0 +1,10 @@
+(include "#.scm")
+
+(test-eqv 6 (six.x*y 2 3))
+(test-eqv 2 (six.x/y 6 3))
+(test-eqv 3 (six.x%y 7 4))
+(test-eqv 3 (six.x//y 7 2))
+(test-equal '(1 . 2) (six.cons 1 2))
+(test-equal '() (six.null))
+(test-equal '(1 . 2) (six.list 1 2))
+(test-equal '#(2 2 2) (six.make-array 2 3))
