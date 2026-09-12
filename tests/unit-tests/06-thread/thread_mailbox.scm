@@ -25,8 +25,20 @@
 
 (test-eq 'queued (thread-join! (thread-start! t-next) 2.0 'join-timeout))
 
+(define timeout-exn
+  (with-exception-catcher
+   (lambda (x) x)
+   (lambda () (thread-receive 0.05))))
+
+(test-assert (mailbox-receive-timeout-exception? timeout-exn))
+(test-eq thread-receive (mailbox-receive-timeout-exception-procedure timeout-exn))
+(test-equal '(0.05) (mailbox-receive-timeout-exception-arguments timeout-exn))
+(test-assert (eq? #f (mailbox-receive-timeout-exception? #f)))
+
 (test-error-tail type-exception? (thread-send #f 'x))
 (test-error-tail type-exception? (thread-receive 'not-a-timeout))
+(test-error-tail type-exception? (mailbox-receive-timeout-exception-procedure #f))
+(test-error-tail type-exception? (mailbox-receive-timeout-exception-arguments #f))
 (test-error-tail wrong-number-of-arguments-exception? (thread-send))
 (test-error-tail wrong-number-of-arguments-exception? (thread-send t-recv))
 (test-error-tail
