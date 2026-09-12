@@ -6,6 +6,7 @@
 (test-eq #f (string-suffix? "abr" "abracadabra"))
 (test-eq #t (string-prefix-ci? "Ab" "abracadabra"))
 (test-eq #t (string-suffix-ci? "Bra" "abracadabra"))
+(test-eqv 2 (string-prefix-length "abcd" "abracadabra"))
 (test-error-tail type-exception? (string-prefix? 1 "ab"))
 (test-error-tail type-exception? (string-suffix? "ab" 1))
 (test-error-tail type-exception? (string-prefix-ci? 1 "ab"))
