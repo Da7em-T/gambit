@@ -25,6 +25,22 @@
 
 (test-eq 'queued (thread-join! (thread-start! t-next) 2.0 'join-timeout))
 
+(define t-rewind
+  (make-thread
+   (lambda ()
+     (thread-send (current-thread) 'a)
+     (thread-send (current-thread) 'b)
+     (let ((first (thread-mailbox-next)))
+       (thread-mailbox-rewind)
+       (list first (thread-mailbox-next))))))
+
+(test-equal
+ '(a a)
+ (thread-join! (thread-start! t-rewind) 2.0 'join-timeout))
+
+(test-error-tail type-exception? (thread-suspend! #f))
+(test-error-tail type-exception? (thread-resume! #f))
+
 (define timeout-exn
   (with-exception-catcher
    (lambda (x) x)
