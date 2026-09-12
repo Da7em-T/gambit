@@ -12,6 +12,11 @@
 (test-eqv 2 (string-suffix-length-ci "extrA" "abracadabra"))
 (test-eq #t (string-ci=? "Ab" "ab"))
 (test-eq #f (string-ci=? "ab" "cd"))
+(test-equal "AB" (string-map char-upcase "ab"))
+(test-eqv 2
+  (let ((n 0))
+    (string-for-each (lambda (c) (set! n (+ n 1))) "ab")
+    n))
 (test-error-tail type-exception? (string-prefix? 1 "ab"))
 (test-error-tail type-exception? (string-suffix? "ab" 1))
 (test-error-tail type-exception? (string-prefix-ci? 1 "ab"))
