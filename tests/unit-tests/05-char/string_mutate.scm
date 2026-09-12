@@ -36,3 +36,9 @@
     (string-copy! dst 1 src)
     dst))
 (test-error-tail type-exception? (string-copy! 1 0 "ab"))
+(test-equal "ecghi"
+  (let ((src (string #\a #\b #\c #\d))
+        (dst (string #\e #\f #\g #\h #\i)))
+    (substring-move! src 2 3 dst 1)
+    dst))
+(test-error-tail type-exception? (substring-move! 1 0 1 "ab" 0))
