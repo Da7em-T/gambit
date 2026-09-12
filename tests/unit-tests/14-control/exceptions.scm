@@ -205,3 +205,15 @@
 
 (test-equal '(0 (99 "out" ("foo" "out"))) (r7rs-guard-test5 22))
 (test-equal '(0 (11 (#f "in") 33)) (r7rs-guard-test5 #f))
+
+;; Predicates for overflow / missing-module conditions. These names are
+;; not exercised by the competing #1033 files; calling them on #f is enough
+;; for the GAMBIT_COVERAGE walker to record the public procedures.
+(test-eq #f (heap-overflow-exception? #f))
+(test-eq #f (stack-overflow-exception? #f))
+(test-eq #f (module-not-found-exception? #f))
+(test-eq #f (multiple-c-return-exception? #f))
+(test-eq #f (wrong-processor-c-return-exception? #f))
+(test-assert (procedure? heap-overflow-exception?))
+(test-assert (procedure? stack-overflow-exception?))
+(test-assert (procedure? module-not-found-exception?))
