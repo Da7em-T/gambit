@@ -244,3 +244,7 @@
 (test-error-tail type-exception? (number-of-arguments-limit-exception-procedure #f))
 (test-error-tail type-exception? (module-not-found-exception-arguments #f))
 (test-error-tail type-exception? (module-not-found-exception-procedure #f))
+(test-eq #f (permission-denied-exception? #f))
+(test-assert (procedure? permission-denied-exception?))
+(test-error-tail type-exception? (permission-denied-exception-arguments #f))
+(test-error-tail type-exception? (permission-denied-exception-procedure #f))
