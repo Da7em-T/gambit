@@ -43,6 +43,24 @@
 
 (test-eq 1 (thread-join! t-started 2.0 'join-timeout))
 
+(define t-timeout-join
+  (make-thread (lambda () (thread-sleep! 2) 1)))
+(thread-start! t-timeout-join)
+
+(define e-join-timeout
+  (with-exception-catcher
+   (lambda (x) x)
+   (lambda () (thread-join! t-timeout-join 0.05))))
+
+(test-assert (join-timeout-exception? e-join-timeout))
+(test-eq thread-join! (join-timeout-exception-procedure e-join-timeout))
+(test-eq t-timeout-join (car (join-timeout-exception-arguments e-join-timeout)))
+(test-assert (eq? #f (join-timeout-exception? #f)))
+(thread-terminate! t-timeout-join)
+
+(test-error-tail type-exception? (join-timeout-exception-procedure #f))
+(test-error-tail type-exception? (join-timeout-exception-arguments #f))
+
 (test-error-tail type-exception? (uninitialized-thread-exception-procedure #f))
 (test-error-tail type-exception? (uninitialized-thread-exception-arguments #f))
 (test-error-tail type-exception? (terminated-thread-exception-procedure #f))
