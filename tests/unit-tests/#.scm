@@ -111,19 +111,20 @@
                      ((cond)
                       (for-each
                        (lambda (clause)
-                         (if (not (eq? (car clause)) 'else)
+                         (if (not (eq? (car clause) 'else))
                              (walk (car clause)))
                          (if (pair? (cdr clause))
                              (begin
-                               (if (not (eq? (cadr clause)) '=>)
+                               (if (not (eq? (cadr clause) '=>))
                                    (walk (cadr clause)))
                                (for-each walk (cddr clause)))))
                        (cdr expr)))
                      ((case)
+                      (walk (cadr expr))
                       (for-each
                        (lambda (clause)
-                         (walk (cdr clause)))
-                       (cdr expr)))
+                         (for-each walk (cdr clause)))
+                       (cddr expr)))
                      (else
                       (let ((first (car expr)))
                         (if (symbol? first)
