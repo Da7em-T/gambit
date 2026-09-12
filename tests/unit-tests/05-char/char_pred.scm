@@ -11,6 +11,8 @@
 (test-eq #f (char-whitespace? #\a))
 (test-eq #t (char-ci=? #\a #\A))
 (test-eq #f (char-ci=? #\a #\b))
+(test-eq #t (char-ci<? #\a #\b))
+(test-eq #f (char-ci<? #\a #\A))
 (test-eqv #\A (char-upcase #\a))
 (test-eq #t (char-lower-case? #\a))
 (test-eq #f (char-lower-case? #\A))
