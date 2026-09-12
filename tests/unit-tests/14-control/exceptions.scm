@@ -242,3 +242,5 @@
 (test-error-tail type-exception? (scheduler-exception-reason #f))
 (test-error-tail type-exception? (number-of-arguments-limit-exception-arguments #f))
 (test-error-tail type-exception? (number-of-arguments-limit-exception-procedure #f))
+(test-error-tail type-exception? (module-not-found-exception-arguments #f))
+(test-error-tail type-exception? (module-not-found-exception-procedure #f))
