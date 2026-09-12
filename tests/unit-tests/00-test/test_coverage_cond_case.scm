@@ -35,3 +35,12 @@
  (case (abs -1)
    ((1) 1)
    (else 0)))
+
+(test-equal #t (cond ((positive? 1))))
+
+(test-equal
+ 7
+ (case (string-length "ab")
+   ((2) (cond ((number? 7) (abs -7))
+              (else (sqrt 9))))
+   (else 0)))
